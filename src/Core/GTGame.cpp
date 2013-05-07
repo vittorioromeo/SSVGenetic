@@ -1,6 +1,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <queue>
 #include "Core/GTDependencies.h"
 #include "Core/GTAssets.h"
 #include "Core/GTGame.h"
@@ -38,6 +39,8 @@ namespace gt
 		initInput();
 		initLevel();
 		initDebugGrid();
+
+		bfs(100, 100);
 	}
 
 	void GTGame::restart()
@@ -113,6 +116,7 @@ namespace gt
 			debugGrid[index.x + grid.getOffset()][index.y + grid.getOffset()] = 1;
 			targetX = getMousePosition().x;
 			targetY = getMousePosition().y;
+			bfs(index.x, index.y);
 		}, t::SINGLE);
 		gameState.addInput({{k::Num5}}, [&](float){ clearDebugGrid(); }, t::SINGLE);
 	}
@@ -154,6 +158,72 @@ namespace gt
 		spawnAnts();
 	}
 
+	void GTGame::bfs(int mX, int mY)
+	{
+		for(int iX{0}; iX < grid.getColumns(); iX++)
+			for(int iY{0}; iY < grid.getRows(); iY++)
+			{
+				nodes[iX][iY]->g = 99999;
+				nodes[iX][iY]->parent = nullptr;
+				nodes[iX][iY]->visited = false;
+				nodes[iX][iY]->closed = false;
+				nodes[iX][iY]->obstacle = false;
+			}
+
+		queue<Node*> openNodes;
+		Node* startNode = nodes[mX][mY];
+		startNode->g = 0;
+		openNodes.push(startNode);
+		startNode->closed = true;
+
+		while(openNodes.empty() == false)
+		{
+			Node& currentNode(*openNodes.front());
+			openNodes.pop();
+
+			int x = currentNode.x;
+			int y = currentNode.y;
+			int width = grid.getColumns() - 1;
+			int height = grid.getRows() - 1;
+			vector<Node*> neighbors(8);
+
+			if (x < width)
+			{
+			   neighbors[0] = nodes[x + 1][y];
+			   if (y < height) neighbors[4] = nodes[x + 1][y + 1];
+			   if (y > 0) neighbors[6] = nodes[x + 1][y - 1];
+			}
+			if (x > 0)
+			{
+			   neighbors[1] = nodes[x - 1][y];
+			   if (y < height) neighbors[5] = nodes[x - 1][y + 1];
+			   if (y > 0) neighbors[7] = nodes[x - 1][y - 1];
+			}
+			if (y < height) neighbors[2] = nodes[x][y + 1];
+			if (y > 0) neighbors[3] = nodes[x][y - 1];
+
+			for (unsigned int i = 0; i < neighbors.size(); ++i)
+			{
+			   Node& neighbor = *neighbors[i];
+			   if (&neighbor == nullptr) continue;
+			   if (neighbor.closed) continue;
+			   if(grid.isIndexValid({neighbor.x, neighbor.y}) == false) continue;
+			   if (grid.getCell(neighbor.x, neighbor.y).getBodies("wall").size() > 0)
+			   {
+				   neighbor.g = 99999;
+				   neighbor.obstacle = true;
+				   continue;
+			   }
+
+			   neighbor.parent = &currentNode;
+			   neighbor.g = i > 4 ? neighbor.parent->g + 14 : neighbor.parent->g + 10;
+			   neighbor.visited = true;
+			   neighbor.closed = true;
+			   openNodes.push(&neighbor);
+			}
+		}
+	}
+
 	void GTGame::update(float mFrameTime)
 	{
 		if(simulating)
@@ -171,7 +241,7 @@ namespace gt
 		camera.apply();
 		render(grassSprite);
 		manager.draw();
-		drawDebugGrid();
+		//drawDebugGrid();
 		camera.unapply();
 		drawDebugText();
 	}
@@ -208,6 +278,12 @@ namespace gt
 			debugGrid.push_back(vector<int>(grid.getRows()));
 			for(int iY{0}; iY < grid.getRows(); iY++) debugGrid[iX][iY] = 0;
 		}
+
+		for(int iX{0}; iX < grid.getColumns(); iX++)
+		{
+			nodes.push_back(vector<Node*>(grid.getRows()));
+			for(int iY{0}; iY < grid.getRows(); iY++) nodes[iX][iY] = new Node{iX, iY};
+		}
 	}
 
 	void GTGame::setDebugGrid(int mX, int mY)
@@ -226,18 +302,14 @@ namespace gt
 		for(int iX{0}; iX < grid.getColumns(); iX++)
 			for(int iY{0}; iY < grid.getRows(); iY++)
 			{
-				if(debugGrid[iX][iY] == 0) continue;
+				//if(debugGrid[iX][iY] == 0) continue;
 
-				Color color{255, 255, 0, 90};
+				Color color{Color::Red};
 
-				if((iX % 2 == 0 && iY % 2 != 0) || (iX % 2 != 0 && iY % 2 == 0))
-				{
-					Color tempColor{color};
-					color.r = color.b; color.b = tempColor.r;
-				}
+				color.a = getClamped(255 - nodes[iX][iY]->g, 0, 255);
 
-				int oIX{iX - grid.getOffset()};
-				int oIY{iY - grid.getOffset()};
+				int oIX{iX };
+				int oIY{iY };
 
 				Vector2i a{grid.getCellSize() * oIX, grid.getCellSize() * oIY};
 				Vector2i b{grid.getCellSize() * (oIX + 1), grid.getCellSize() * oIY};
@@ -268,6 +340,12 @@ namespace gt
 		debugText.setPosition({0, 0});
 		render(debugText);
 	}
+	int GTGame::getDebugGrid(int mX, int mY) { return debugGrid[mX][mY]; }
+
+	int GTGame::getNodeG(int mX, int mY)
+	{
+		return nodes[mX][mY]->g;
+	}
 
 
 	// Getters
@@ -285,4 +363,7 @@ namespace gt
 	int GTGame::getTargetX()			{ return targetX; }
 	int GTGame::getTargetY()			{ return targetY; }
 	float GTGame::getRealFT()			{ return 60.f / gameWindow.getFPS(); }
+
+	Node::Node(int mX, int mY) : x{mX}, y{mY} { }
+
 }

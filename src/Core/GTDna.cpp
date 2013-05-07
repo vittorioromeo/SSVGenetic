@@ -66,10 +66,10 @@ namespace gt
 
 		for(auto& o : organisms)
 		{
-			float fitnessNormal{getMapped<float>(o->fitness, 0.f, maxFitness, 0.f, 1.f)};
+			float fitnessNormal{getMapped<float>(o->fitness, 0.f, getClamped(maxFitness, 0.f, 999.f), 0.f, 1.f)};
 
 			int n{static_cast<int>(pow((1 - fitnessNormal), bias) * (150 * (bias * 2)))};
-			n = max(0, n);
+			n = max(1, n);
 			for(int i{0}; i < n; ++i) matingPool.push_back(o);
 		}
 	}

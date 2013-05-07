@@ -10,6 +10,15 @@ namespace gt
 	constexpr int cameraWidth{1440};
 	constexpr int cameraHeight{900};
 
+	struct Node
+	{
+		int x, y, g{99999};
+		bool closed{false}, obstacle{false}, visited{false};
+		Node* parent{nullptr};
+
+		Node(int mX, int mY);
+	};
+
 	class GTAssets;
 
 	class GTGame
@@ -26,6 +35,7 @@ namespace gt
 
 			int inputX{0}, inputY{0}, inputShoot{0}, inputJump{0}, inputWalk{0};
 			sf::Text debugText;
+			std::vector<std::vector<Node*>> nodes;
 			std::vector<std::vector<int>> debugGrid;
 			sf::VertexArray debugGridVertices{sf::PrimitiveType::Quads};
 
@@ -43,6 +53,7 @@ namespace gt
 
 			void restart();
 			void nextGeneration();
+			void bfs(int mX, int mY);
 
 			float getRealFT();
 
@@ -73,6 +84,8 @@ namespace gt
 			int getTargetX();
 			int getTargetY();
 			void drawDebugText();
+			int getDebugGrid(int mX, int mY);
+			int getNodeG(int mX, int mY);
 	};
 }
 

@@ -30,19 +30,20 @@ namespace gt
 		cRender.setRotation(getDegrees(body.getVelocity()));
 
 		auto& s(body.getShape());
-		auto dist(sqrt(pow((s.getX() - game.getTargetX()), 2) + pow((s.getY() - game.getTargetY()), 2)));
+		Grid& grid = body.getWorld().getSpatial<Grid>();
+		auto dist( game.getNodeG(grid.getIndex(s.getPosition()).x, grid.getIndex(s.getPosition()).y));
 
-		if(dist < 1000)
+		if(dist < 10)
 		{
 			dist = 0;
 			body.setStatic(true);
-			fitness = fitnessTimer;
+			fitness = 0;
 			winner = true;
 		}
 		else
 		{
 			fitnessTimer += mFrameTime;
-			fitness = dist + fitnessTimer;
+			fitness = dist + fitnessTimer / 100;
 		}
 
 		cDnaController.getOrganism().fitness = fitness;
