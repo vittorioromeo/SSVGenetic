@@ -39,19 +39,19 @@ namespace gt
 	float GTPopulation::getMinFitness()
 	{
 		float result{numeric_limits<float>::max()};
-		for(auto& o : organisms) if(o->fitness < result) result = o->fitness;
+		for(const auto& o : organisms) if(o->fitness < result) result = o->fitness;
 		return result;
 	}
 	float GTPopulation::getMedianFitness()
 	{
 		float result{0};
-		for(auto& o : organisms) result += o->fitness;
+		for(const auto& o : organisms) result += o->fitness;
 		return result / organisms.size();
 	}
 	float GTPopulation::getMaxFitness()
 	{
 		float result{0};
-		for(auto& o : organisms) if(o->fitness > result) result = o->fitness;
+		for(const auto& o : organisms) if(o->fitness > result) result = o->fitness;
 		return result;
 	}
 
@@ -64,7 +64,7 @@ namespace gt
 		//matingPool.push_back(organisms[0]);
 		//return;
 
-		for(auto& o : organisms)
+		for(const auto& o : organisms)
 		{
 			float fitnessNormal{getMapped<float>(o->fitness, 0.f, getClamped(maxFitness, 0.f, 999.f), 0.f, 1.f)};
 
@@ -92,7 +92,7 @@ namespace gt
 			newOrganisms.push_back(new GTOrganism{childDna});
 		}
 
-		for(auto& o : organisms) delete o;
+		for(const auto& o : organisms) delete o;
 		organisms = newOrganisms;
 		++generation;
 	}

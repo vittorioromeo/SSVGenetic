@@ -23,7 +23,7 @@ namespace gt
 		world(createResolver<Retro>(), createSpatial<Grid>(600, 600, 1600, 300)), grid(world.getSpatial<Grid>()),
 		debugText{"", assets.getAssetManager().getFont("bitxmap.ttf")}, population{1, 200}, grassSprite{assets.getAssetManager().getTexture("grass.png")}
 	{
-		for(auto& t : assets.getAssetManager().getTextures()) t.second->setSmooth(true);
+		for(const auto& t : assets.getAssetManager().getTextures()) t.second->setSmooth(true);
 
 		assets.getAssetManager().getTexture("grass.png").setRepeated(true);
 		grassSprite.setTextureRect(IntRect(0, 0, 256 * 10, 256 * 7.5f));
@@ -53,8 +53,8 @@ namespace gt
 
 	void GTGame::spawnAnts()
 	{
-		for(auto& ant : manager.getComponents<GTCAnt>("ant")) ant->getEntity().destroy();
-		for(auto& o : population.organisms) factory.createAnt(Vector2i{64000, 48000}, *o);
+		for(const auto& ant : manager.getComponents<GTCAnt>("ant")) ant->getEntity().destroy();
+		for(const auto& o : population.organisms) factory.createAnt(Vector2i{64000, 48000}, *o);
 	}
 
 	void GTGame::initInput()
@@ -106,7 +106,7 @@ namespace gt
 		gameState.addInput({{k::Num1}}, [&](float)
 		{
 			auto index(grid.getIndex(getMousePosition()));
-			if(grid.getCell(index).getBodies("wall").size() > 0) return;
+			if(grid.getCell(index).getBodies(world.getGroupId("wall")).size() > 0) return;
 			factory.createWall(getMousePosition());
 		});
 		gameState.addInput({{k::Num4}}, [&](float)
@@ -139,7 +139,7 @@ namespace gt
 	{
 		int winnerCount{0};
 
-		for(auto& c : manager.getComponents<GTCAnt>("ant")) if(c->isWinner()) ++winnerCount;
+		for(const auto& c : manager.getComponents<GTCAnt>("ant")) if(c->isWinner()) ++winnerCount;
 
 		generationTimer = 0;
 
@@ -202,13 +202,13 @@ namespace gt
 			if (y < height) neighbors[2] = nodes[x][y + 1];
 			if (y > 0) neighbors[3] = nodes[x][y - 1];
 
-			for (unsigned int i = 0; i < neighbors.size(); ++i)
+			for(unsigned int i = 0; i < neighbors.size(); ++i)
 			{
 			   Node& neighbor = *neighbors[i];
 			   if (&neighbor == nullptr) continue;
 			   if (neighbor.closed) continue;
 			   if(grid.isIndexValid({neighbor.x, neighbor.y}) == false) continue;
-			   if (grid.getCell(neighbor.x, neighbor.y).getBodies("wall").size() > 0)
+			   if (grid.getCell(neighbor.x, neighbor.y).getBodies(world.getGroupId("wall")).size() > 0)
 			   {
 				   neighbor.g = 99999;
 				   neighbor.obstacle = true;
@@ -251,8 +251,8 @@ namespace gt
 	{
 		ostringstream s;
 		int componentCount{0}, dynamicBodiesCount{0};
-		for(auto& e : manager.getEntities()) componentCount += e->getComponents().size();
-		for(auto& b : world.getBodies()) if(!b->isStatic()) ++dynamicBodiesCount;
+		for(const auto& e : manager.getEntities()) componentCount += e->getComponents().size();
+		for(const auto& b : world.getBodies()) if(!b->isStatic()) ++dynamicBodiesCount;
 
 		//s << "FPS: "				<< toStr(gameWindow.getFPS()) << endl;
 		//s << "FrameTime: "			<< toStr(mFrameTime) << endl;
@@ -325,7 +325,7 @@ namespace gt
 	void GTGame::drawDebugText()
 	{
 		static vector<Vector2f> offsets{{-1.f, -1.f}, {-1.f, 1.f}, {1.f, -1.f}, {1.f, 1.f}};
-		for(auto& offset : offsets)
+		for(const auto& offset : offsets)
 		{
 			debugText.setColor(Color::Black);
 			for(int i{0}; i < 10; ++i)

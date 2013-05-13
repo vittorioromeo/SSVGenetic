@@ -26,7 +26,7 @@ namespace gt
 			if(scaleWithBody) sprite.setScale(size.x / 16.f, size.y / 16.f);
 		}
 	}
-	void GTCRender::draw() { for(auto& sprite : sprites) game.render(sprite); }
+	void GTCRender::draw() { for(const auto& sprite : sprites) game.render(sprite); }
 
 	void GTCRender::addSprite(Sprite mSprite) { sprites.push_back(mSprite); }
 
