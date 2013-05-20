@@ -106,7 +106,7 @@ namespace gt
 		gameState.addInput({{k::Num1}}, [&](float)
 		{
 			auto index(grid.getIndex(getMousePosition()));
-			if(grid.getCell(index).getBodies(world.getGroupId("wall")).size() > 0) return;
+			if(grid.getCell(index).getBodies(world.getGroupUid("wall")).size() > 0) return;
 			factory.createWall(getMousePosition());
 		});
 		gameState.addInput({{k::Num4}}, [&](float)
@@ -208,7 +208,7 @@ namespace gt
 			   if (&neighbor == nullptr) continue;
 			   if (neighbor.closed) continue;
 			   if(grid.isIndexValid({neighbor.x, neighbor.y}) == false) continue;
-			   if (grid.getCell(neighbor.x, neighbor.y).getBodies(world.getGroupId("wall")).size() > 0)
+			   if (grid.getCell(neighbor.x, neighbor.y).getBodies(world.getGroupUid("wall")).size() > 0)
 			   {
 				   neighbor.g = 99999;
 				   neighbor.obstacle = true;
