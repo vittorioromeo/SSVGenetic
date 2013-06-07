@@ -184,3 +184,5 @@ SSVOpenHexagon.txt
 *.a/_RELEASE/SSVGenetic
 /build/SSVGenetic
 /build/install_manifest.txt
+/CMakeLists.txt.user.0000000
+/CMakeLists.txt.user.7626ec3
