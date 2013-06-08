@@ -61,7 +61,7 @@ namespace gt
 	{
 		using k = Keyboard::Key;
 		using b = Mouse::Button;
-		using t = Input::Trigger::Types;
+		using t = Input::Trigger::Type;
 
 		gameState.addInput({{k::Escape}}, [&](float){ gameWindow.stop(); });
 
@@ -73,7 +73,7 @@ namespace gt
 		gameState.addInput({{k::Q}}, [=](float){ camera.zoom(1.f + 0.02f * getRealFT()); });
 		gameState.addInput({{k::E}}, [=](float){ camera.zoom(1.f - 0.02f * getRealFT()); });
 
-		gameState.addInput({{k::BackSpace}}, [=](float){ simulating = !simulating; }, t::SINGLE);
+		gameState.addInput({{k::BackSpace}}, [=](float){ simulating = !simulating; }, t::Single);
 
 		gameState.addInput({{k::Left}}, [&](float)
 		{
@@ -99,7 +99,7 @@ namespace gt
 
 		gameState.addInput({{k::Up}},			[&](float){ inputY = -1; });
 		gameState.addInput({{k::Down}},			[&](float){ inputY = 1; });
-		gameState.addInput({{k::Z}, {b::Left}},	[&](float){ inputShoot = 1; }, t::SINGLE);
+		gameState.addInput({{k::Z}, {b::Left}},	[&](float){ inputShoot = 1; }, t::Single);
 		gameState.addInput({{k::X}},			[&](float){ inputJump = 1; });
 		gameState.addInput({{k::LShift}},		[&](float){ inputWalk = 1; });
 
@@ -117,8 +117,8 @@ namespace gt
 			targetX = getMousePosition().x;
 			targetY = getMousePosition().y;
 			bfs(index.x, index.y);
-		}, t::SINGLE);
-		gameState.addInput({{k::Num5}}, [&](float){ clearDebugGrid(); }, t::SINGLE);
+		}, t::Single);
+		gameState.addInput({{k::Num5}}, [&](float){ clearDebugGrid(); }, t::Single);
 	}
 	void GTGame::initLevel()
 	{
