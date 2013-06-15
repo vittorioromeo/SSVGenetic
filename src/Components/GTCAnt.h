@@ -9,7 +9,7 @@ namespace gt
 	class GTCDnaController;
 	class GTCPhysics;
 	class GTCRender;
-	class GTDna;
+	struct GTDna;
 
 	class GTCAnt : public sses::Component
 	{

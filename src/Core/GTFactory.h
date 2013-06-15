@@ -7,7 +7,7 @@ namespace gt
 {
 	class GTAssets;
 	class GTGame;
-	class GTOrganism;
+	struct GTOrganism;
 
 	class GTFactory
 	{
