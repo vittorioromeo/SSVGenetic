@@ -1,3 +1,7 @@
+// Copyright (c) 2013 Vittorio Romeo
+// License: Academic Free License ("AFL") v. 3.0
+// AFL License page: http://opensource.org/licenses/AFL-3.0
+
 #include "Core/GTDependencies.h"
 #include "Core/GTAssets.h"
 #include "Core/GTGame.h"
