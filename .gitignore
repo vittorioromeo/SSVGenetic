@@ -19,6 +19,7 @@ cmake_install.cmake
 #################
 _RELEASE/Profiles/*.json
 _RELEASE/log.txt
+_RELEASE/SSVGenetic
 
 *.pydevproject
 .metadata
