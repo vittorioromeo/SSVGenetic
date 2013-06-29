@@ -116,5 +116,5 @@ namespace gt
 		for(unsigned int i{0}; i < mGeneCount; ++i) genes.push_back(getRandomGene());
 		return GTDna{genes};
 	}
-	GTOrganism* getRandomOrganism() { return new GTOrganism{getRandomDna(150)}; }
+	GTOrganism* getRandomOrganism() { return new GTOrganism{getRandomDna(450)}; }
 }

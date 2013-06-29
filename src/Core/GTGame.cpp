@@ -25,9 +25,10 @@ namespace gt
 {
 	GTGame::GTGame(GameWindow& mGameWindow, GTAssets& mAssets) : gameWindow(mGameWindow), assets(mAssets), factory{assets, *this, manager, world},
 		world(createResolver<Retro>(), createSpatial<Grid>(600, 600, 1600, 300)), grid(world.getSpatial<Grid>()),
-		debugText{"", assets.getAssetManager().getFont("bitxmap.ttf")}, population{1, 200}, grassSprite{assets.getAssetManager().getTexture("grass.png")}
+		debugText{assets.getAssetManager().getBitmapFont("limeStroked")}, population{1, 200}, grassSprite{assets.getAssetManager().getTexture("grass.png")}
 	{
 		for(const auto& t : assets.getAssetManager().getTextures()) t.second->setSmooth(true);
+		assets.getTexture("limeStroked.png").setSmooth(false);
 
 		assets.getAssetManager().getTexture("grass.png").setRepeated(true);
 		grassSprite.setTextureRect(IntRect(0, 0, 256 * 10, 256 * 7.5f));
@@ -45,6 +46,14 @@ namespace gt
 		initDebugGrid();
 
 		bfs(100, 100);
+
+		debugText.setScale(2.f, 2.f);
+		debugText.setTracking(-2);
+
+		targetShape.setRadius(15.f);
+		targetShape.setFillColor({0, 0, 0, 0});
+		targetShape.setOutlineColor(Color::Red);
+		targetShape.setOutlineThickness(2.5f);
 	}
 
 	void GTGame::restart()
@@ -118,6 +127,7 @@ namespace gt
 			auto index(grid.getIndex(getMousePosition()));
 			clearDebugGrid();
 			debugGrid[index.x + grid.getOffset()][index.y + grid.getOffset()] = 1;
+			targetShape.setPosition(toPixels(getMousePosition()));
 			targetX = getMousePosition().x;
 			targetY = getMousePosition().y;
 			bfs(index.x, index.y);
@@ -245,9 +255,10 @@ namespace gt
 		camera.apply();
 		render(grassSprite);
 		manager.draw();
+		render(targetShape);
 		//drawDebugGrid();
 		camera.unapply();
-		drawDebugText();
+		render(debugText);
 	}
 	void GTGame::render(const Drawable& mDrawable) { gameWindow.draw(mDrawable); }
 
@@ -272,8 +283,6 @@ namespace gt
 		s << endl << lastGenerationString;
 
 		debugText.setString(s.str());
-		debugText.setCharacterSize(200);
-		debugText.setScale(0.13f, 0.13f);
 	}
 	void GTGame::initDebugGrid()
 	{
@@ -326,30 +335,9 @@ namespace gt
 			}
 		render(debugGridVertices);
 	}
-	void GTGame::drawDebugText()
-	{
-		static vector<Vector2f> offsets{{-1.f, -1.f}, {-1.f, 1.f}, {1.f, -1.f}, {1.f, 1.f}};
-		for(const auto& offset : offsets)
-		{
-			debugText.setColor(Color::Black);
-			for(int i{0}; i < 10; ++i)
-			{
-				float multiplier{static_cast<float>(i) * 0.1f};
-				debugText.setPosition({offset.x * multiplier, offset.y * multiplier});
-				render(debugText);
-			}
-		}
-
-		debugText.setColor(Color::White);
-		debugText.setPosition({0, 0});
-		render(debugText);
-	}
 	int GTGame::getDebugGrid(int mX, int mY) { return debugGrid[mX][mY]; }
 
-	int GTGame::getNodeG(int mX, int mY)
-	{
-		return nodes[mX][mY]->g;
-	}
+	int GTGame::getNodeG(int mX, int mY) { return nodes[mX][mY]->g; }
 
 
 	// Getters

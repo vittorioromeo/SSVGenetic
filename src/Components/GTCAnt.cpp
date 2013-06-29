@@ -35,7 +35,7 @@ namespace gt
 
 		auto& s(body.getShape());
 		Grid& grid = body.getWorld().getSpatial<Grid>();
-		auto dist( game.getNodeG(grid.getIndex(s.getPosition()).x, grid.getIndex(s.getPosition()).y));
+		auto dist(game.getNodeG(grid.getIndex(s.getPosition()).x, grid.getIndex(s.getPosition()).y));
 
 		if(dist < 10)
 		{

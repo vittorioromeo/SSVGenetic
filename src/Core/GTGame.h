@@ -29,7 +29,7 @@ namespace gt
 	{
 		private:
 			ssvs::GameWindow& gameWindow;
-			ssvs::Camera camera{gameWindow, {{320 / 2, 240 / 2}, {cameraWidth / 3, cameraHeight / 3}}};
+			ssvs::Camera camera{gameWindow, {{160, 90}, {cameraWidth / 3, cameraHeight / 3}}};
 			GTAssets& assets;
 			GTFactory factory;
 			ssvs::GameState gameState;
@@ -38,10 +38,12 @@ namespace gt
 			sses::Manager manager;
 
 			int inputX{0}, inputY{0}, inputShoot{0}, inputJump{0}, inputWalk{0};
-			sf::Text debugText;
+			ssvs::BitmapText debugText;
 			std::vector<std::vector<Node*>> nodes;
 			std::vector<std::vector<int>> debugGrid;
 			sf::VertexArray debugGridVertices{sf::PrimitiveType::Quads};
+
+			sf::CircleShape targetShape;
 
 			bool simulating{true};
 			GTPopulation population;

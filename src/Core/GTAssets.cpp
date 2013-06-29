@@ -8,15 +8,18 @@ using namespace std;
 using namespace sf;
 using namespace ssvu::FileSystem;
 using namespace ssvs;
+using namespace ssvs::Utils;
+using namespace ssvuj;
 
 namespace gt
 {
 	GTAssets::GTAssets()
 	{
 		assetManager.loadFolder("Data/");
+		assetManager.loadBitmapFont("limeStroked", assetManager.getTexture("limeStroked.png"), getBitmapFontDataFromJson(getRootFromFile("Data/lime.json")));
 	}
 
 	// Getters
-	AssetManager& GTAssets::getAssetManager() { return assetManager; }
-	Texture& GTAssets::getTexture(const string& mId) { return assetManager.getTexture(mId); }
+	AssetManager& GTAssets::getAssetManager()			{ return assetManager; }
+	Texture& GTAssets::getTexture(const string& mId)	{ return assetManager.getTexture(mId); }
 }
