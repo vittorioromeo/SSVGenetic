@@ -25,7 +25,7 @@ namespace gt
 	{
 		body.onDetection += [&](DetectionInfo mInfo)
 		{
-			if(contains(mInfo.body.getGroups(), "wall")) fitness += 2000;
+			if(mInfo.body.hasGroup(body.getWorld().getGroup("wall"))) fitness += 2000;
 		};
 	}
 

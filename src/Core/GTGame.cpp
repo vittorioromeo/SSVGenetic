@@ -119,7 +119,11 @@ namespace gt
 		gameState.addInput({{k::Num1}}, [&](float)
 		{
 			auto index(grid.getIndex(getMousePosition()));
-			if(grid.getCell(index).getBodies(world.getGroupUid("wall")).size() > 0) return;
+
+			Group wallGroup(world.getGroup("wall"));
+			const auto& cellBodies(grid.getCell(index).getBodies());
+			for(auto& b : cellBodies) if(b->hasGroup(wallGroup)) return;
+
 			factory.createWall(getMousePosition());
 		});
 		gameState.addInput({{k::Num4}}, [&](float)
@@ -219,10 +223,16 @@ namespace gt
 			for(unsigned int i = 0; i < neighbors.size(); ++i)
 			{
 			   Node& neighbor = *neighbors[i];
-			   if (&neighbor == nullptr) continue;
-			   if (neighbor.closed) continue;
+			   if(&neighbor == nullptr) continue;
+			   if(neighbor.closed) continue;
 			   if(grid.isIndexValid({neighbor.x, neighbor.y}) == false) continue;
-			   if (grid.getCell(neighbor.x, neighbor.y).getBodies(world.getGroupUid("wall")).size() > 0)
+
+			   Group wallGroup(world.getGroup("wall"));
+			   bool isObstacle{false};
+			   const auto& cellBodies(grid.getCell(neighbor.x, neighbor.y).getBodies());
+				for(auto& b : cellBodies) if(b->hasGroup(wallGroup)) { isObstacle = true; break; }
+
+			   if(isObstacle)
 			   {
 				   neighbor.g = 99999;
 				   neighbor.obstacle = true;
