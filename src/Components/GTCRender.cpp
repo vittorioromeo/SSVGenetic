@@ -19,7 +19,7 @@ namespace gt
 
 	void GTCRender::update(float)
 	{
-		Vector2f position{toPixels(body.getPosition())}, size{toPixels(body.getSize())};
+		Vec2f position{toPixels(body.getPosition())}, size{toPixels(body.getSize())};
 		for(auto& sprite : sprites)
 		{
 			auto& rect(sprite.getTextureRect());
@@ -44,5 +44,5 @@ namespace gt
 	void GTCRender::setFlippedX(bool mFlippedX)	{ flippedX = mFlippedX; }
 	void GTCRender::setFlippedY(bool mFlippedY)	{ flippedY = mFlippedY; }
 	void GTCRender::setScaleWithBody(bool mScaleWithBody) { scaleWithBody = mScaleWithBody; }
-	void GTCRender::setOffset(Vector2f mOffset)	{ offset = mOffset; }
+	void GTCRender::setOffset(Vec2f mOffset)	{ offset = mOffset; }
 }

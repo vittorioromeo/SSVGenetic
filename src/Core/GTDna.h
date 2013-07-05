@@ -12,7 +12,7 @@ namespace gt
 	struct GTGene
 	{
 		float time;
-		sf::Vector2f velocity;
+		ssvs::Vec2f velocity;
 
 		GTGene(float mTime, float mDegrees, float mMagnitude);
 	};

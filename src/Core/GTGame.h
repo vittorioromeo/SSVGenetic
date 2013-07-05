@@ -81,7 +81,7 @@ namespace gt
 			sses::Manager& getManager();
 			ssvsc::World& getWorld();
 			GTFactory& getFactory();
-			sf::Vector2i getMousePosition();
+			ssvs::Vec2i getMousePosition();
 			int getInputX();
 			int getInputY();
 			int getInputShoot();

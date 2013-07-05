@@ -24,8 +24,8 @@ namespace gt
 		public:
 			GTFactory(GTAssets& mAssets, GTGame& mGame, sses::Manager& mManager, ssvsc::World& mWorld);
 
-			sses::Entity& createWall(sf::Vector2i mPosition);
-			sses::Entity& createAnt(sf::Vector2i mPosition, GTOrganism& mOrganism);
+			sses::Entity& createWall(ssvs::Vec2i mPosition);
+			sses::Entity& createAnt(ssvs::Vec2i mPosition, GTOrganism& mOrganism);
 	};
 }
 

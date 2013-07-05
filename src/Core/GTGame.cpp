@@ -67,7 +67,7 @@ namespace gt
 	void GTGame::spawnAnts()
 	{
 		for(const auto& ant : manager.getComponents<GTCAnt>("ant")) ant->getEntity().destroy();
-		for(const auto& o : population.organisms) factory.createAnt(Vector2i{64000, 48000}, *o);
+		for(const auto& o : population.organisms) factory.createAnt(Vec2i{64000, 48000}, *o);
 	}
 
 	void GTGame::initInput()
@@ -79,10 +79,10 @@ namespace gt
 		gameState.addInput({{k::Escape}}, [&](float){ gameWindow.stop(); });
 
 		float spd = 8.0f;
-		gameState.addInput({{k::A}}, [=](float){ camera.move(Vector2f{-spd, 0} * getRealFT()); });
-		gameState.addInput({{k::D}}, [=](float){ camera.move(Vector2f{spd, 0} * getRealFT()); });
-		gameState.addInput({{k::W}}, [=](float){ camera.move(Vector2f{0, -spd} * getRealFT()); });
-		gameState.addInput({{k::S}}, [=](float){ camera.move(Vector2f{0, spd} * getRealFT()); });
+		gameState.addInput({{k::A}}, [=](float){ camera.move(Vec2f{-spd, 0} * getRealFT()); });
+		gameState.addInput({{k::D}}, [=](float){ camera.move(Vec2f{spd, 0} * getRealFT()); });
+		gameState.addInput({{k::W}}, [=](float){ camera.move(Vec2f{0, -spd} * getRealFT()); });
+		gameState.addInput({{k::S}}, [=](float){ camera.move(Vec2f{0, spd} * getRealFT()); });
 		gameState.addInput({{k::Q}}, [=](float){ camera.zoom(1.f + 0.02f * getRealFT()); });
 		gameState.addInput({{k::E}}, [=](float){ camera.zoom(1.f - 0.02f * getRealFT()); });
 
@@ -333,10 +333,10 @@ namespace gt
 				int oIX{iX };
 				int oIY{iY };
 
-				Vector2i a{grid.getCellSize() * oIX, grid.getCellSize() * oIY};
-				Vector2i b{grid.getCellSize() * (oIX + 1), grid.getCellSize() * oIY};
-				Vector2i c{grid.getCellSize() * (oIX + 1), grid.getCellSize() * (oIY + 1)};
-				Vector2i d{grid.getCellSize() * oIX, grid.getCellSize() * (oIY + 1)};
+				Vec2i a{grid.getCellSize() * oIX, grid.getCellSize() * oIY};
+				Vec2i b{grid.getCellSize() * (oIX + 1), grid.getCellSize() * oIY};
+				Vec2i c{grid.getCellSize() * (oIX + 1), grid.getCellSize() * (oIY + 1)};
+				Vec2i d{grid.getCellSize() * oIX, grid.getCellSize() * (oIY + 1)};
 				debugGridVertices.append({toPixels(a), color});
 				debugGridVertices.append({toPixels(b), color});
 				debugGridVertices.append({toPixels(c), color});
@@ -355,7 +355,7 @@ namespace gt
 	Manager& GTGame::getManager()		{ return manager; }
 	World& GTGame::getWorld()			{ return world; }
 	GTFactory& GTGame::getFactory()		{ return factory; }
-	Vector2i GTGame::getMousePosition()	{ return toCoords(camera.getMousePosition()); }
+	Vec2i GTGame::getMousePosition()	{ return toCoords(camera.getMousePosition()); }
 	int GTGame::getInputX()				{ return inputX; }
 	int GTGame::getInputY()				{ return inputY; }
 	int GTGame::getInputShoot()			{ return inputShoot; }

@@ -14,7 +14,7 @@ using namespace ssvu;
 
 namespace gt
 {
-	GTCPhysics::GTCPhysics(Entity& mEntity, GTGame& mGame, World& mWorld, bool mIsStatic, Vector2i mPosition, Vector2i mSize, bool mAffectedByGravity)
+	GTCPhysics::GTCPhysics(Entity& mEntity, GTGame& mGame, World& mWorld, bool mIsStatic, Vec2i mPosition, Vec2i mSize, bool mAffectedByGravity)
 		: Component(mEntity, "physics"), game(mGame), world(mWorld), body(world.create(mPosition, mSize, mIsStatic)), affectedByGravity{mAffectedByGravity}
 	{
 		body.setUserData(&getEntity());
@@ -32,7 +32,7 @@ namespace gt
 	// Getters
 	World& GTCPhysics::getWorld()				{ return world; }
 	Body& GTCPhysics::getBody()					{ return body; }
-	Vector2i GTCPhysics::getLastResolution()	{ return lastResolution; }
+	Vec2i GTCPhysics::getLastResolution()	{ return lastResolution; }
 	bool GTCPhysics::isAffectedByGravity()		{ return affectedByGravity; }
 	bool GTCPhysics::isCrushedLeft()			{ return crushedLeft > crushedTolerance; }
 	bool GTCPhysics::isCrushedRight()			{ return crushedRight > crushedTolerance; }

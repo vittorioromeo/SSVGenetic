@@ -17,7 +17,7 @@ using namespace ssvsc::Utils;
 
 namespace gt
 {
-	GTGene::GTGene(float mTime, float mDegrees, float mMagnitude) : time{mTime}, velocity{getVectorFromDegrees(mDegrees, mMagnitude)} { }
+	GTGene::GTGene(float mTime, float mDegrees, float mMagnitude) : time{mTime}, velocity{getVecFromDegrees(mDegrees, mMagnitude)} { }
 	GTDna::GTDna(vector<GTGene>& mGenes) : genes{mGenes} { }
 	GTOrganism::GTOrganism(GTDna mDna) : dna{mDna} { }
 

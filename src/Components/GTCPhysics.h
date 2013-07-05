@@ -19,16 +19,16 @@ namespace gt
 			GTGame& game;
 			ssvsc::World& world;
 			ssvsc::Body& body;
-			sf::Vector2i lastResolution;
+			ssvs::Vec2i lastResolution;
 			bool affectedByGravity{true};
 			int crushedLeft{0}, crushedRight{0}, crushedTop{0}, crushedBottom{0};
-			sf::Vector2f gravityForce{0, 25};
+			ssvs::Vec2f gravityForce{0, 25};
 
 		public:
 			ssvu::Delegate<void, sses::Entity&> onDetection;
-			ssvu::Delegate<void, sf::Vector2i> onResolution;
+			ssvu::Delegate<void, ssvs::Vec2i> onResolution;
 
-			GTCPhysics(sses::Entity& mEntity, GTGame& mGame, ssvsc::World& mWorld, bool mIsStatic, sf::Vector2i mPosition, sf::Vector2i mSize, bool mAffectedByGravity = true);
+			GTCPhysics(sses::Entity& mEntity, GTGame& mGame, ssvsc::World& mWorld, bool mIsStatic, ssvs::Vec2i mPosition, ssvs::Vec2i mSize, bool mAffectedByGravity = true);
 			~GTCPhysics();
 
 			void update(float mFrameTime) override;
@@ -39,7 +39,7 @@ namespace gt
 			// Getters
 			ssvsc::World& getWorld();
 			ssvsc::Body& getBody();
-			sf::Vector2i getLastResolution();
+			ssvs::Vec2i getLastResolution();
 			bool isAffectedByGravity();
 			bool isCrushedLeft();
 			bool isCrushedRight();

@@ -25,10 +25,10 @@ namespace gt
 	GTFactory::GTFactory(GTAssets& mAssets, GTGame& mGame, Manager& mManager, World& mWorld) : assets(mAssets), game(mGame),
 		manager(mManager), world(mWorld) { }
 
-	Entity& GTFactory::createWall(Vector2i mPosition)
+	Entity& GTFactory::createWall(Vec2i mPosition)
 	{
 		auto& result(manager.createEntity("wall"));
-		auto& cPhysics(result.createComponent<GTCPhysics>(game, world, true, mPosition, Vector2i{1600, 1600}));
+		auto& cPhysics(result.createComponent<GTCPhysics>(game, world, true, mPosition, Vec2i{1600, 1600}));
 		auto& cRender(result.createComponent<GTCRender>(game, cPhysics.getBody()));
 
 		Body& body(cPhysics.getBody());
@@ -41,10 +41,10 @@ namespace gt
 		return result;
 	}
 
-	Entity& GTFactory::createAnt(Vector2i mPosition, GTOrganism& mOrganism)
+	Entity& GTFactory::createAnt(Vec2i mPosition, GTOrganism& mOrganism)
 	{
 		auto& result(manager.createEntity("ant"));
-		auto& cPhysics(result.createComponent<GTCPhysics>(game, world, false, mPosition, Vector2i{1000, 1000}));
+		auto& cPhysics(result.createComponent<GTCPhysics>(game, world, false, mPosition, Vec2i{1000, 1000}));
 		auto& cRender(result.createComponent<GTCRender>(game, cPhysics.getBody()));
 		auto& cDnaController(result.createComponent<GTCDnaController>(game, cPhysics, mOrganism));
 		result.createComponent<GTCAnt>(game, cDnaController, cPhysics, cRender);
