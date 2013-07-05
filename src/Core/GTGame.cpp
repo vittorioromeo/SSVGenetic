@@ -119,11 +119,10 @@ namespace gt
 		gameState.addInput({{k::Num1}}, [&](float)
 		{
 			auto index(grid.getIndex(getMousePosition()));
+			const auto& cell(grid.getCell(index));
 
 			Group wallGroup(world.getGroup("wall"));
-			const auto& cellBodies(grid.getCell(index).getBodies());
-			for(auto& b : cellBodies) if(b->hasGroup(wallGroup)) return;
-
+			for(const auto& b : cell.getBodies()) if(b->hasGroup(wallGroup)) return;
 			factory.createWall(getMousePosition());
 		});
 		gameState.addInput({{k::Num4}}, [&](float)
