@@ -18,7 +18,7 @@ using namespace ssvu;
 
 namespace gt
 {
-	GTCDnaController::GTCDnaController(Entity& mEntity, GTGame& mGame, GTCPhysics& mCPhysics, GTOrganism& mOrganism) : Component(mEntity, "dnaController"),
+	GTCDnaController::GTCDnaController(GTGame& mGame, GTCPhysics& mCPhysics, GTOrganism& mOrganism) : Component("dnaController"),
 		game(mGame), cPhysics(mCPhysics), body(cPhysics.getBody()), organism(mOrganism) { }
 
 	void GTCDnaController::update(float mFrameTime)

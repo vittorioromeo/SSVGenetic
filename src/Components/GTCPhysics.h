@@ -28,27 +28,28 @@ namespace gt
 			ssvu::Delegate<void, sses::Entity&> onDetection;
 			ssvu::Delegate<void, ssvs::Vec2i> onResolution;
 
-			GTCPhysics(sses::Entity& mEntity, GTGame& mGame, ssvsc::World& mWorld, bool mIsStatic, ssvs::Vec2i mPosition, ssvs::Vec2i mSize, bool mAffectedByGravity = true);
+			GTCPhysics(GTGame& mGame, ssvsc::World& mWorld, bool mIsStatic, ssvs::Vec2i mPosition, ssvs::Vec2i mSize, bool mAffectedByGravity = true);
 			~GTCPhysics();
 
+			void init() override;
 			void update(float mFrameTime) override;
 
 			// Setters
-			void setAffectedByGravity(bool mAffectedByGravity);
+			inline void setAffectedByGravity(bool mAffectedByGravity) { affectedByGravity = mAffectedByGravity; }
 
 			// Getters
-			ssvsc::World& getWorld();
-			ssvsc::Body& getBody();
-			ssvs::Vec2i getLastResolution();
-			bool isAffectedByGravity();
-			bool isCrushedLeft();
-			bool isCrushedRight();
-			bool isCrushedTop();
-			bool isCrushedBottom();
-			int getCrushedLeft();
-			int getCrushedRight();
-			int getCrushedTop();
-			int getCrushedBottom();
+			inline ssvsc::World& getWorld() const			{ return world; }
+			inline ssvsc::Body& getBody() const				{ return body; }
+			inline ssvs::Vec2i getLastResolution() const	{ return lastResolution; }
+			inline bool isAffectedByGravity() const			{ return affectedByGravity; }
+			inline bool isCrushedLeft() const				{ return crushedLeft > crushedTolerance; }
+			inline bool isCrushedRight() const				{ return crushedRight > crushedTolerance; }
+			inline bool isCrushedTop() const				{ return crushedTop > crushedTolerance; }
+			inline bool isCrushedBottom() const				{ return crushedBottom > crushedTolerance; }
+			inline int getCrushedLeft() const				{ return crushedLeft; }
+			inline int getCrushedRight() const				{ return crushedRight; }
+			inline int getCrushedTop() const				{ return crushedTop; }
+			inline int getCrushedBottom() const				{ return crushedBottom; }
 	};
 }
 

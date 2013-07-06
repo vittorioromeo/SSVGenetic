@@ -20,7 +20,7 @@ using namespace ssvu;
 
 namespace gt
 {
-	GTCAnt::GTCAnt(Entity& mEntity, GTGame& mGame, GTCDnaController& mCDnaController, GTCPhysics& mCPhysics, GTCRender& mCRender) : Component(mEntity, "ant"),
+	GTCAnt::GTCAnt(GTGame& mGame, GTCDnaController& mCDnaController, GTCPhysics& mCPhysics, GTCRender& mCRender) : Component("ant"),
 		game(mGame), cDnaController(mCDnaController), cPhysics(mCPhysics), cRender(mCRender), body(cPhysics.getBody())
 	{
 		body.onDetection += [&](DetectionInfo mInfo)

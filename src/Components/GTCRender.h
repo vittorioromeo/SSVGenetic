@@ -21,7 +21,7 @@ namespace gt
 			ssvs::Vec2f offset;
 
 		public:
-			GTCRender(sses::Entity& mEntity, GTGame& mGame, ssvsc::Body& mBody);
+			GTCRender(GTGame& mGame, ssvsc::Body& mBody);
 
 			void update(float) override;
 			void draw() override;

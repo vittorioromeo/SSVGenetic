@@ -30,7 +30,7 @@ namespace gt
 
 		public:
 
-			GTCAnt(sses::Entity& mEntity, GTGame& mGame, GTCDnaController& mCDnaController, GTCPhysics& mCPhysics, GTCRender& mCRender);
+			GTCAnt(GTGame& mGame, GTCDnaController& mCDnaController, GTCPhysics& mCPhysics, GTCRender& mCRender);
 
 			void update(float mFrameTime) override;
 

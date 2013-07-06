@@ -15,7 +15,7 @@ using namespace ssvu;
 
 namespace gt
 {
-	GTCRender::GTCRender(Entity& mEntity, GTGame& mGame, Body& mBody) : Component(mEntity, "render"), game(mGame), body(mBody) { }
+	GTCRender::GTCRender(GTGame& mGame, Body& mBody) : Component("render"), game(mGame), body(mBody) { }
 
 	void GTCRender::update(float)
 	{

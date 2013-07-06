@@ -24,7 +24,7 @@ namespace gt
 			unsigned int index{0};
 
 		public:
-			GTCDnaController(sses::Entity& mEntity, GTGame& mGame, GTCPhysics& mCPhysics, GTOrganism& mOrganism);
+			GTCDnaController(GTGame& mGame, GTCPhysics& mCPhysics, GTOrganism& mOrganism);
 
 			void update(float mFrameTime) override;
 
