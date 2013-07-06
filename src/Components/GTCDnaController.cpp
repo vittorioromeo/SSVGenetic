@@ -18,8 +18,8 @@ using namespace ssvu;
 
 namespace gt
 {
-	GTCDnaController::GTCDnaController(GTGame& mGame, GTCPhysics& mCPhysics, GTOrganism& mOrganism) : Component("dnaController"),
-		game(mGame), cPhysics(mCPhysics), body(cPhysics.getBody()), organism(mOrganism) { }
+	GTCDnaController::GTCDnaController(GTGame& mGame, GTCPhysics& mCPhysics, GTOrganism& mOrganism) : game(mGame),
+		cPhysics(mCPhysics), body(cPhysics.getBody()), organism(mOrganism) { }
 
 	void GTCDnaController::update(float mFrameTime)
 	{
@@ -36,10 +36,7 @@ namespace gt
 
 			++index;
 		}
-		else
-		{
-			body.setVelocity({0.f, 0.f});
-		}
+		else body.setVelocity({0.f, 0.f});
 	}
 
 	GTOrganism& GTCDnaController::getOrganism() { return organism; }

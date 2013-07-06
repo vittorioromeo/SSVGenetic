@@ -66,7 +66,7 @@ namespace gt
 
 	void GTGame::spawnAnts()
 	{
-		for(const auto& ant : manager.getComponents<GTCAnt>("ant")) ant->getEntity().destroy();
+		for(const auto& ant : manager.getComponents<GTCAnt>()) ant->getEntity().destroy();
 		for(const auto& o : population.organisms) factory.createAnt(Vec2i{64000, 48000}, *o);
 	}
 
@@ -156,7 +156,7 @@ namespace gt
 	{
 		int winnerCount{0};
 
-		for(const auto& c : manager.getComponents<GTCAnt>("ant")) if(c->isWinner()) ++winnerCount;
+		for(const auto& c : manager.getComponents<GTCAnt>()) if(c->isWinner()) ++winnerCount;
 
 		generationTimer = 0;
 
