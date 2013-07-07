@@ -20,19 +20,24 @@ namespace gt
 	void GTCRender::update(float)
 	{
 		Vec2f position{toPixels(body.getPosition())}, size{toPixels(body.getSize())};
-		for(auto& sprite : sprites)
+		for(auto& s : sprites)
 		{
-			auto& rect(sprite.getTextureRect());
-			sprite.setOrigin({rect.width / 2.f, rect.height / 2.f});
-
-			sprite.setPosition(position + offset);
-			sprite.setScale(flippedX ? -1 : 1, flippedY ? -1 : 1);
-			if(scaleWithBody) sprite.setScale(size.x / 16.f, size.y / 16.f);
+			s.setPosition(position + offset);
+			s.setScale(flippedX ? -1 : 1, flippedY ? -1 : 1);
+			if(scaleWithBody) s.setScale(size.x / 16.f, size.y / 16.f);
 		}
 	}
-	void GTCRender::draw() { for(const auto& sprite : sprites) game.render(sprite); }
+	void GTCRender::draw()
+	{
+		for(const auto& s : sprites) game.render(s);
+	}
 
-	void GTCRender::addSprite(Sprite mSprite) { sprites.push_back(mSprite); }
+	void GTCRender::addSprite(Sprite mSprite)
+	{
+		auto& rect(mSprite.getTextureRect());
+		mSprite.setOrigin({rect.width / 2.f, rect.height / 2.f});
+		sprites.push_back(mSprite);
+	}
 
 	// Getters
 	bool GTCRender::isFlippedX() const			{ return flippedX; }
@@ -40,7 +45,7 @@ namespace gt
 	vector<Sprite>& GTCRender::getSprites()		{ return sprites; }
 
 	// Setters
-	void GTCRender::setRotation(float mDegrees)	{ for(auto& sprite : sprites) sprite.setRotation(mDegrees); }
+	void GTCRender::setRotation(float mDegrees)	{ for(auto& s : sprites) s.setRotation(mDegrees); }
 	void GTCRender::setFlippedX(bool mFlippedX)	{ flippedX = mFlippedX; }
 	void GTCRender::setFlippedY(bool mFlippedY)	{ flippedY = mFlippedY; }
 	void GTCRender::setScaleWithBody(bool mScaleWithBody) { scaleWithBody = mScaleWithBody; }
