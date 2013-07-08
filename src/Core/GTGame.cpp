@@ -156,7 +156,7 @@ namespace gt
 	{
 		int winnerCount{0};
 
-		for(const auto& c : manager.getEntities("ant")) if(c->getFirstComponent<GTCAnt>().isWinner()) ++winnerCount;
+		for(const auto& c : manager.getEntities("ant")) if(c->getComponent<GTCAnt>().isWinner()) ++winnerCount;
 
 		generationTimer = 0;
 
