@@ -9,8 +9,8 @@
 
 namespace gt
 {
-	template<typename T> float toPixels(T mValue)					{ return mValue / 100; }
-	template<typename T> int toCoords(T mValue)						{ return mValue * 100; }
+	template<typename T> constexpr float toPixels(T mValue) 		{ return mValue / 100; }
+	template<typename T> constexpr int toCoords(T mValue) 			{ return mValue * 100; }
 	template<typename T> ssvs::Vec2f toPixels(ssvs::Vec2<T> mValue)	{ return {toPixels(mValue.x), toPixels(mValue.y)}; }
 	template<typename T> ssvs::Vec2i toCoords(ssvs::Vec2<T> mValue)	{ return {toCoords(mValue.x), toCoords(mValue.y)}; }
 	template<typename T> T getMapped(T mValue, T mOldMin, T mOldMax, T mNewMin, T mNewMax)

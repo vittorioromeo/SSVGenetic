@@ -21,7 +21,7 @@ int main()
 	//width = 1440; height = 900;
 
 	GTAssets assets;
-	GameWindow gameWindow{"SSVGenetic", createStaticTimer(gameWindow, 1.0f, 0.5f, 800), width, height, 1, false};
+	GameWindow gameWindow{"SSVGenetic", createStaticTimer(gameWindow, 1.0f, 1.0f, 800), width, height, 1, false};
 	GTGame game{gameWindow, assets};
 
 	gameWindow.setGameState(game.getGameState());

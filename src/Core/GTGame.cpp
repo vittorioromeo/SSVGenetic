@@ -3,6 +3,7 @@
 // AFL License page: http://opensource.org/licenses/AFL-3.0
 
 #include <sstream>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include <queue>
@@ -121,8 +122,12 @@ namespace gt
 			auto index(grid.getIndex(getMousePosition()));
 			const auto& cell(grid.getCell(index));
 
-			Group wallGroup(world.getGroup("wall"));
-			for(const auto& b : cell.getBodies()) if(b->hasGroup(wallGroup)) return;
+			if(!getGameWindow().isKeyPressed(Keyboard::Key::LShift))
+			{
+				Group wallGroup(world.getGroup("wall"));
+				for(const auto& b : cell.getBodies()) if(b->hasGroup(wallGroup)) return;
+			}
+
 			factory.createWall(getMousePosition());
 		});
 		gameState.addInput({{k::Num4}}, [&](float)
@@ -274,9 +279,9 @@ namespace gt
 	void GTGame::updateDebugText(float)
 	{
 		ostringstream s;
-		int componentCount{0}, dynamicBodiesCount{0};
-		for(const auto& e : manager.getEntities()) componentCount += e->getComponents().size();
-		for(const auto& b : world.getBodies()) if(!b->isStatic()) ++dynamicBodiesCount;
+		//int componentCount{0}, dynamicBodiesCount{0};
+		//for(const auto& e : manager.getEntities()) componentCount += e->getComponents().size();
+		//for(const auto& b : world.getBodies()) if(!b->isStatic()) ++dynamicBodiesCount;
 
 		//s << "FPS: "				<< toStr(gameWindow.getFPS()) << endl;
 		//s << "FrameTime: "			<< toStr(mFrameTime) << endl;
@@ -285,10 +290,11 @@ namespace gt
 		//s << "Bodies(dynamic): "	<< toStr(dynamicBodiesCount) << endl;
 		//s << "Entities: "			<< toStr(entities.size()) << endl;
 		//s << "Components: "			<< toStr(componentCount) << endl;
-		s << "Time: "				<< toStr(generationTimer) << " / " << toStr(generationTimerMax) << endl;
-		s << "Timeslice: "			<< toStr(gameWindow.getTimer<StaticTimer>().getTimeSlice()) << endl;
-		s << "Bias: "				<< toStr(population.bias) << endl;
-		s << "Mutation: "			<< toStr(population.mutationRate) << endl;
+		s << std::setprecision(2) << std::fixed;
+		s << "        (O/P)	Tempo limite: "				<< generationTimer / 60.f << "s / " << generationTimerMax / 60.f << "s" << endl;
+		s << "(PG UP/PG DN)	Crudelta': "				<< population.bias << "%" << endl;
+		s << "      (UP/DN)	Possibilita' mutazioni: "	<< population.mutationRate << "%" << endl;
+		s << "        (L/R)	Velocita' simulazione: "	<< "1s = " << gameWindow.getTimer<StaticTimer>().getTimeSlice() << endl;
 		s << endl << lastGenerationString;
 
 		debugText.setString(s.str());
