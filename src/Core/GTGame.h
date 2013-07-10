@@ -44,6 +44,7 @@ namespace gt
 			sf::VertexArray debugGridVertices{sf::PrimitiveType::Quads};
 
 			sf::CircleShape targetShape;
+			sf::Sprite logoSprite;
 
 			bool simulating{true};
 			GTPopulation population;

@@ -31,6 +31,10 @@ namespace gt
 		for(const auto& t : assets.getAssetManager().getTextures()) t.second->setSmooth(true);
 		assets.getTexture("limeStroked.png").setSmooth(false);
 
+		logoSprite.setTexture(assets.getAssetManager().getTexture("logo.png"));
+		logoSprite.setScale(0.35f, 0.35f);
+		logoSprite.setPosition(getGameWindow().getWidth() - logoSprite.getGlobalBounds().width, getGameWindow().getHeight() - logoSprite.getGlobalBounds().height);
+
 		assets.getAssetManager().getTexture("grass.png").setRepeated(true);
 		grassSprite.setTextureRect(IntRect(0, 0, 256 * 10, 256 * 7.5f));
 		grassSprite.setScale({0.5f, 0.5f});
@@ -273,6 +277,7 @@ namespace gt
 		//drawDebugGrid();
 		camera.unapply();
 		render(debugText);
+		render(logoSprite);
 	}
 	void GTGame::render(const Drawable& mDrawable) { gameWindow.draw(mDrawable); }
 
