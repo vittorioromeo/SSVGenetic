@@ -16,7 +16,7 @@ namespace gt
 	GTAssets::GTAssets()
 	{
 		assetManager.loadFolder("Data/");
-		assetManager.loadBitmapFont("limeStroked", assetManager.getTexture("limeStroked.png"), getBitmapFontDataFromJson(getRootFromFile("Data/lime.json")));
+		assetManager.loadBitmapFont("limeStroked", assetManager.getTexture("limeStroked.png"), as<BitmapFontData>(getRootFromFile("Data/lime.json")));
 	}
 
 	// Getters
